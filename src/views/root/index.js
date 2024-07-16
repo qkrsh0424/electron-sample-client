@@ -71,6 +71,7 @@ function ConnectButton() {
         const result = await ipcRenderer.invoke('core/create-browser');
         console.log('=== await ipcRenderer.invoke End')
 
+        console.log('result is : ', result);
         console.log('=== result check Start')
         if (result?.message === 'success') {
             console.log('= result is success')
