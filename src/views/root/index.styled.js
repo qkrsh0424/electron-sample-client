@@ -14,3 +14,9 @@ export const ConnectButton = styled.button`
     background: #efefef;
     cursor: pointer;
 `;
+
+export const TestCheckButtonBox = styled.div`
+    position: fixed;
+    bottom: 0;
+    right: 0;
+`;

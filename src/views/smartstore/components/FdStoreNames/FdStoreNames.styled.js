@@ -11,9 +11,16 @@ export const Title = styled.h3`
 export const BodyWrapper = styled.div`
     position: relative;
     margin-top: 10px;
-    display: flex;
-    gap: 20px;
     width: fit-content;
+
+    .flexBox{
+        display: flex;
+        gap: 20px;
+    }
+`;
+
+export const ConfirmNewOrderCheckBox = styled.div`
+    margin-bottom: 20px;
 `;
 
 export const StoreListWrapper = styled.div`

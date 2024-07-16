@@ -18,20 +18,35 @@ if (!ipcRenderer) {
 export function MainView(props) {
     const globalConnectionContextValue = useGlobalConnectionContextValueHook();
 
+    const [testCheckFlag, setTestCheckFlag] = useState(false);
+
     return (
         <>
             <St.Container>
-                <ConnectButton />
+                <ConnectButton
+                    testCheckFlag={testCheckFlag}
+                />
                 {globalConnectionContextValue?.isConnected &&
                     <FdLoginSmartstore />
                 }
             </St.Container>
+
+            <St.TestCheckButtonBox>
+                <input
+                    type='checkbox'
+                    checked={testCheckFlag || false}
+                    onChange={(e) => setTestCheckFlag(!testCheckFlag)}
+                ></input>
+                <label onClick={(e) => setTestCheckFlag(!testCheckFlag)}>테스트모드</label>
+            </St.TestCheckButtonBox>
         </>
     );
 }
 
 const DEFAULT_CONNECTION_TIME = 3600;
-function ConnectButton() {
+function ConnectButton({
+    testCheckFlag
+}) {
     const globalConnectionContextValue = useGlobalConnectionContextValueHook();
     const globalConnectionContextActions = useGlobalConnectionContextActionsHook();
 
@@ -68,7 +83,9 @@ function ConnectButton() {
         console.log('=== globalConnectionContextActions.onChangeIsLoading(true); End')
 
         console.log('=== await ipcRenderer.invoke Start')
-        const result = await ipcRenderer.invoke('core/create-browser');
+        const result = await ipcRenderer.invoke('core/create-browser', {
+            testMode: testCheckFlag
+        });
         console.log('=== await ipcRenderer.invoke End')
 
         console.log('result is : ', result);

@@ -26,21 +26,6 @@ export function FdOrderData(props) {
         }
     }
 
-    const invokeConfirmNewOrder = async () => {
-        const storeNameList = storeContentValueContext?.valueList?.map(r => r.storeName);
-
-        const result = await ipcRenderer.invoke('smartstore/confirm-newOrder', {
-            // storeNameList: storeNameList
-            storeNameList: ['아르빙']
-        });
-
-        if (result?.message === 'failure') {
-            console.log('페이지가 정상적으로 열리지 않음.');
-            return;
-        }
-
-    }
-
     const handleClickOrder = async (storeName, orderStatus) => {
         setSelectedStoreName(storeName);
         setSelectedOrderStatus(orderStatus);
@@ -67,14 +52,7 @@ export function FdOrderData(props) {
                 console.error('엑셀 파일 생성 에러:', error);
             });
     }
-
-    if (!storeContentValueContext.valueList) {
-        return <><button
-            type='button'
-            onClick={() => invokeConfirmNewOrder()}
-        >전체 신규주문 발주확인</button></>;
-    }
-
+    
     return (
         <>
             <St.Container>

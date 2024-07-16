@@ -50,7 +50,6 @@ export function FdLoginSmartstore(props) {
         }
     }
 
-    console.log(globalSmartstoreContextValue.storeNameList);
     return (
         <>
             <St.Container>
