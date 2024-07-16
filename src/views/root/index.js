@@ -52,26 +52,55 @@ function ConnectButton() {
     }, [globalConnectionContextValue?.isConnected, time]);
 
     const invokeCreateBrowser = async () => {
-        globalConnectionContextActions.onChangeIsLoading(true);
-        const result = await ipcRenderer.invoke('core/create-browser');
+        console.log('===== invokeCreateBrowser Function Start')
 
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(true); Start')
+        globalConnectionContextActions.onChangeIsLoading(true);
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(true); End')
+
+        console.log('=== await ipcRenderer.invoke Start')
+        const result = await ipcRenderer.invoke('core/create-browser');
+        console.log('=== await ipcRenderer.invoke End')
+
+        console.log('=== result check Start')
         if (result?.message === 'success') {
+            console.log('= result is success')
             globalConnectionContextActions.onChangeIsConnected(true);
             setTime(DEFAULT_CONNECTION_TIME);
         }
+        console.log('=== result check End')
+
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(false); Start')
         globalConnectionContextActions.onChangeIsLoading(false);
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(false); End')
+
+        console.log('invokeCreateBrowser Function End')
     }
 
     const invokeCloseBrowser = async () => {
+        console.log('===== invokeCloseBrowser Function Start')
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(true); Start')
         globalConnectionContextActions.onChangeIsLoading(true);
-        const result = await ipcRenderer.invoke('core/close-browser');
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(true); End')
 
+        console.log('=== await ipcRenderer.invoke Start')
+        const result = await ipcRenderer.invoke('core/close-browser');
+        console.log('=== await ipcRenderer.invoke End')
+
+        console.log('=== result check Start')
         if (result?.message === 'success') {
+            console.log('= result is success')
             globalConnectionContextActions.onChangeIsConnected(false);
             setTime(0);
             globalSmartstoreContextActions.onInitialize();
         }
+        console.log('=== result check End')
+
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(false); Start')
         globalConnectionContextActions.onChangeIsLoading(false);
+        console.log('=== globalConnectionContextActions.onChangeIsLoading(false); End')
+
+        console.log('===== invokeCloseBrowser Function End')
     }
 
     const formatTime = (time) => {
