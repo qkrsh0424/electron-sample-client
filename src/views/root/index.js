@@ -4,7 +4,16 @@ import * as St from './index.styled';
 import { FdLoginSmartstore } from './components/FdLoginSmartstore/FdLoginSmartstore';
 import { useGlobalSmartstoreContextActionsHook } from '../../contexts/GlobalSmartstoreContextProvider';
 
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer } = window.require ? window.require('electron') : { ipcRenderer: null };
+
+if (!ipcRenderer) {
+    console.error('ipcRenderer is not available. Ensure that nodeIntegration is enabled.');
+} else if (typeof ipcRenderer.invoke !== 'function') {
+    console.error('ipcRenderer.invoke is not available. Ensure that contextIsolation is set to false and nodeIntegration is set to true.');
+} else {
+    console.log('ipcRenderer.invoke is available.');
+    // Your code using ipcRenderer.invoke here
+}
 
 export function MainView(props) {
     const globalConnectionContextValue = useGlobalConnectionContextValueHook();
