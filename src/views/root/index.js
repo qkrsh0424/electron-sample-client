@@ -3,6 +3,7 @@ import { useGlobalConnectionContextActionsHook, useGlobalConnectionContextValueH
 import * as St from './index.styled';
 import { FdLoginSmartstore } from './components/FdLoginSmartstore/FdLoginSmartstore';
 import { useGlobalSmartstoreContextActionsHook } from '../../contexts/GlobalSmartstoreContextProvider';
+import { FdSellertoolApiKey } from './components/FdSellertoolApiKey/FdSellertoolApiKey';
 
 const { ipcRenderer } = window.require ? window.require('electron') : { ipcRenderer: null };
 
@@ -23,6 +24,7 @@ export function MainView(props) {
     return (
         <>
             <St.Container>
+                <FdSellertoolApiKey />
                 <ConnectButton
                     testCheckFlag={testCheckFlag}
                 />

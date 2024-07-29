@@ -8,6 +8,9 @@ import { ConnectionContextProvider, useConnectionContextValueHook } from './cont
 import { StoreContentContextProvider } from './contexts/StoreContentContextProvider';
 import { StoreNamesContextProvider, useStoreNamesContextActionsHook, useStoreNamesContextValueHook } from './contexts/StoreNamesContextProvider';
 import * as St from './index.styled';
+import { useEffect, useState } from 'react';
+
+const { ipcRenderer } = window.require ? window.require('electron') : { ipcRenderer: null };
 
 export function MainView(props) {
     return (
@@ -24,14 +27,25 @@ export function MainView(props) {
 }
 
 function MainViewCore() {
-    const globalConnectionContextValue = useGlobalConnectionContextValueHook();
     const globalSmartstoreContextValue = useGlobalSmartstoreContextValueHook();
 
-    const connectionContextProvider = useConnectionContextValueHook();
-    const storeNamesValueContext = useStoreNamesContextValueHook();
-    const storeNamesActionsContext = useStoreNamesContextActionsHook();
+    const [excelTranslatorList, setExcelTranslatorList] = useState(null);
 
-    if(!globalSmartstoreContextValue?.isLogin){
+    useEffect(() => {
+        invokeFetchExcelTranslatorList();
+    }, []);
+    
+    const invokeFetchExcelTranslatorList = async () => {
+        const result = await ipcRenderer.invoke(`excel-translators/searchList`);
+
+        if (result?.message === 'success' && result?.content) {
+            setExcelTranslatorList(result?.content);
+        }else{
+            alert(`엑셀 변환기 불러오기: ${result?.message}`)
+        }
+    }
+
+    if (!globalSmartstoreContextValue?.isLogin) {
         return (
             <>
                 <Link to={'/'}>
@@ -45,7 +59,9 @@ function MainViewCore() {
             {(globalSmartstoreContextValue.storeNameList) &&
                 <FdStoreNames />
             }
-            <FdOrderData />
+            <FdOrderData
+                excelTranslatorList={excelTranslatorList}
+            />
         </St.Container>
     );
 }

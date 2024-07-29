@@ -50,3 +50,40 @@ export const OrderDataTableWrapper = styled.div`
         }
     }
 `;
+
+export const ExcelTranslatorListWrapper = styled.div`
+    margin-top: 20px;
+    .title{
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .listWrapper{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        border: 1px solid #f0f0f0;
+        padding: 10px;
+        height: 100px;
+        overflow-y: auto;
+        border-radius: 10px;
+    
+        .excelTranslatorName{
+            border: 1px solid #e0e0e0;
+            font-size: 10px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #fff;
+
+            &.active{
+                background: #000;
+                color: #fff;
+                font-weight: 700;
+                border-color: #000;
+            }
+        }
+    }
+
+`;
